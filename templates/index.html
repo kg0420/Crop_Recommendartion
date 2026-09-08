@@ -23,63 +23,125 @@
         }
       }
     </script>
+
+    <style>
+      /* ========================================================
+         DEDICATED 1-PAGE A4 PRINT STYLING
+         Fixes clipping, margins, and cuts completely
+      ======================================================== */
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 10mm 12mm;
+        }
+
+        /* Force exact rendering of backgrounds & colors */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        /* Hide everything on the screen except the printable card */
+        body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          color: #0f172a !important;
+        }
+
+        /* Hide main UI layout elements */
+        header,
+        aside,
+        #chatAssistantSection,
+        #actionControlsStrip,
+        .no-print {
+          display: none !important;
+        }
+
+        .max-w-7xl,
+        main,
+        .lg\:col-span-8 {
+          max-width: 100% !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+
+        /* Printable card container: locks to 100% printable page width without clipping */
+        #printableReportCard {
+          display: block !important;
+          width: 100% !important;
+          margin: 0 auto !important;
+          padding: 0 !important;
+          border: 1px solid #cbd5e1 !important;
+          border-radius: 8px !important;
+          box-sizing: border-box !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        /* Compact spacing to guarantee fitting onto 1 single page */
+        .metric-box {
+          padding: 6px 8px !important;
+        }
+
+        .metric-val {
+          font-size: 15px !important;
+          line-height: 1.1 !important;
+        }
+
+        .guidance-box {
+          font-size: 10px !important;
+          line-height: 1.4 !important;
+        }
+      }
+    </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen">
+<body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen py-4 sm:py-8 px-3 sm:px-6 lg:px-8">
 
-<div class="py-4 sm:py-8 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-    <!-- Main Card Container -->
-    <main class="bg-white rounded-2xl shadow-elevated border border-slate-200/80 overflow-hidden">
+<div class="max-w-7xl mx-auto">
+    <main class="bg-white rounded-2xl shadow-elevated border border-slate-200 overflow-hidden">
 
-        <!-- Government & Official-Style Header -->
-        <header class="px-5 sm:px-8 pt-6 pb-5 border-b border-slate-100 bg-gradient-to-b from-slate-50/70 to-white">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200/60 text-sky-700 text-xs font-semibold mb-2">
-                        <span class="h-2 w-2 rounded-full bg-sky-500 animate-pulse"></span>
-                        Government Standard Layout • AI Driven
-                    </div>
-                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900">
-                        मृदा स्वास्थ्य कार्ड <span class="text-sky-600 block sm:inline text-xl sm:text-2xl font-bold font-sans">/ Soil Health Card</span>
-                    </h1>
-                    <p class="mt-1 text-sm text-slate-500 max-w-2xl">
-                        Integrated machine-learning agro-ecological assessment and crop recommendations.
-                    </p>
+        <!-- Top Screen Header (Excluded from Print) -->
+        <header class="px-6 py-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-semibold mb-1">
+                    <span class="h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+                    Government Standard Aligned • Digital Portal
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                    मृदा स्वास्थ्य कार्ड <span class="text-sky-600 text-xl font-bold font-sans">/ Soil Health Card</span>
+                </h1>
+                <p class="text-xs text-slate-500">Machine learning agro-ecological analysis and crop advisory system.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-right">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Card ID</p>
+                    <p class="text-xs font-bold text-slate-800">AI-SHC-{{ '%06d'|format(range(1, 999999)|random) }}</p>
                 </div>
-
-                <!-- Meta Details Header Bar -->
-                <div class="grid grid-cols-3 gap-2 sm:gap-3 bg-slate-100/60 p-2.5 rounded-xl border border-slate-200/60 text-xs sm:text-sm min-w-fit">
-                    <div class="px-3 py-1 bg-white rounded-lg shadow-2xs border border-slate-200/50">
-                        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Card ID</p>
-                        <p class="font-bold text-slate-800 tracking-tight">AI-SHC-{{ '%06d'|format(range(1, 999999)|random) }}</p>
-                    </div>
-                    <div class="px-3 py-1 bg-white rounded-lg shadow-2xs border border-slate-200/50">
-                        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Status</p>
-                        <p class="font-bold text-emerald-600 flex items-center gap-1.5">
-                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Digital
-                        </p>
-                    </div>
-                    <div class="px-3 py-1 bg-white rounded-lg shadow-2xs border border-slate-200/50">
-                        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-wider">Engine</p>
-                        <p class="font-bold text-slate-700">CropAI Core</p>
-                    </div>
+                <div class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-right">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Status</p>
+                    <p class="text-xs font-bold text-emerald-600">● Active</p>
                 </div>
             </div>
         </header>
 
-        <!-- Main Workspace Area -->
-        <section class="grid grid-cols-1 lg:grid-cols-12">
+        <!-- Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-12">
 
-            <!-- Left Panel: Soil Data Form -->
-            <aside class="lg:col-span-4 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200/70 bg-slate-50/30">
-                <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <!-- Left Panel: Input Form -->
+            <aside class="lg:col-span-4 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-slate-50/40">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
                     <div>
-                        <h2 class="font-bold text-slate-900 text-base">नमूना जानकारी</h2>
-                        <p class="text-xs text-slate-500">Sample Soil & Climate Parameters</p>
+                        <h2 class="font-bold text-slate-900 text-sm">नमूना जानकारी</h2>
+                        <p class="text-xs text-slate-500">Input Soil & Climate Metrics</p>
                     </div>
-                    <span class="text-xs bg-slate-200/60 font-medium px-2 py-0.5 rounded text-slate-600">7 Metrics</span>
+                    <span class="text-xs bg-slate-200/70 font-semibold px-2 py-0.5 rounded text-slate-600">7 Parameters</span>
                 </div>
 
-                <form action="{{ url_for('predict') }}" method="POST" class="mt-5 space-y-3.5">
+                <form action="{{ url_for('predict') }}" method="POST" class="space-y-3">
                     {% set fields = [
                       ('N','Nitrogen (N)','e.g. 90','kg/ha'),
                       ('P','Phosphorus (P)','e.g. 42','kg/ha'),
@@ -94,7 +156,7 @@
                     <div>
                         <label class="flex justify-between items-center text-xs font-semibold text-slate-700 mb-1">
                             <span>{{ label }}</span>
-                            <span class="text-[11px] text-slate-400 font-normal">{{ unit }}</span>
+                            <span class="text-[10px] text-slate-400 font-normal">{{ unit }}</span>
                         </label>
                         <input
                           type="number"
@@ -103,142 +165,158 @@
                           required
                           value="{{ values[key] if values else '' }}"
                           placeholder="{{ placeholder }}"
-                          class="w-full rounded-lg border border-slate-300/80 bg-white px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 transition focus:border-sky-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/10"
+                          class="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 transition"
                         >
                     </div>
                     {% endfor %}
 
-                    <button class="mt-4 w-full rounded-xl bg-sky-700 hover:bg-sky-800 active:scale-[0.99] text-white font-semibold py-3 px-4 shadow-sm shadow-sky-700/20 transition-all flex items-center justify-center gap-2">
-                        <span>Generate Soil Health Card</span>
+                    <button class="mt-4 w-full rounded-xl bg-sky-700 hover:bg-sky-800 active:scale-[0.99] text-white text-sm font-bold py-2.5 px-4 shadow transition flex items-center justify-center gap-2">
+                        <span>Generate Soil Card</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </button>
                 </form>
 
                 {% if model_error %}
-                <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50/80 p-3.5 text-xs text-amber-800 flex items-start gap-2.5">
-                    <span class="text-amber-600 font-bold">⚠️</span>
-                    <div>
-                        <strong class="font-semibold">Model Error:</strong> {{ model_error }}
-                    </div>
+                <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+                    <strong>Model Error:</strong> {{ model_error }}
                 </div>
                 {% endif %}
 
                 {% if error %}
-                <div class="mt-4 rounded-xl border border-red-200 bg-red-50/80 p-3.5 text-xs text-red-700 flex items-start gap-2.5">
-                    <span class="text-red-600 font-bold">✕</span>
-                    <div>{{ error }}</div>
+                <div class="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+                    {{ error }}
                 </div>
                 {% endif %}
             </aside>
 
-            <!-- Right Panel: Soil Diagnostic Dashboard -->
+            <!-- Right Panel: Report Card & Assistant -->
             <div class="lg:col-span-8 p-5 sm:p-7 space-y-6">
 
-                <div>
-                    <h2 class="font-bold text-slate-900 text-lg">मिट्टी के नमूने का विवरण</h2>
-                    <p class="text-xs text-slate-500">Diagnostic Summary & Nutrient Profile</p>
-                </div>
-
                 {% if values %}
-                {% set cards = [
-                  ('N','उपलब्ध नाइट्रोजन (N)','Available Nitrogen', values.N, 'kg/ha'),
-                  ('P','उपलब्ध फास्फोरस (P)','Available Phosphorus', values.P, 'kg/ha'),
-                  ('K','उपलब्ध पोटेशियम (K)','Available Potassium', values.K, 'kg/ha'),
-                  ('ph','पीएच (pH)','Soil Reaction', values.ph, ''),
-                  ('temperature','तापमान','Ambient Temp', values.temperature, '°C'),
-                  ('humidity','आर्द्रता','Relative Humidity', values.humidity, '%'),
-                  ('rainfall','वर्षा','Precipitation', values.rainfall, 'mm')
-                ] %}
-
-                <!-- Metric Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3.5">
-                    {% for key, hindi, english, val, unit in cards %}
-                      {% set st = statuses[key] %}
-                      {% if st == 'good' %}
-                        {% set card_border = 'border-emerald-200/80' %}
-                        {% set card_bg = 'bg-emerald-50/40' %}
-                        {% set badge_style = 'bg-emerald-100 text-emerald-800 border-emerald-300' %}
-                        {% set status_label = 'Optimal' %}
-                      {% elif st == 'low' %}
-                        {% set card_border = 'border-amber-200/80' %}
-                        {% set card_bg = 'bg-amber-50/40' %}
-                        {% set badge_style = 'bg-amber-100 text-amber-800 border-amber-300' %}
-                        {% set status_label = 'Low' %}
-                      {% else %}
-                        {% set card_border = 'border-rose-200/80' %}
-                        {% set card_bg = 'bg-rose-50/40' %}
-                        {% set badge_style = 'bg-rose-100 text-rose-800 border-rose-300' %}
-                        {% set status_label = 'High' %}
-                      {% endif %}
-
-                      <div class="rounded-xl border {{ card_border }} {{ card_bg }} p-4 transition hover:shadow-subtle">
-                          <div class="flex items-start justify-between gap-2">
-                              <div class="min-w-0">
-                                  <p class="text-xs font-bold text-slate-800 truncate">{{ hindi }}</p>
-                                  <p class="text-[11px] text-slate-500">{{ english }}</p>
-                              </div>
-                              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border {{ badge_style }}">
-                                  {{ status_label }}
-                              </span>
-                          </div>
-                          <div class="mt-3 flex items-baseline gap-1">
-                              <span class="text-2xl font-black tracking-tight text-slate-900">{{ '%.2f'|format(val) }}</span>
-                              <span class="text-xs font-medium text-slate-500">{{ unit }}</span>
-                          </div>
-                      </div>
-                    {% endfor %}
+                <!-- Download Control Bar -->
+                <div id="actionControlsStrip" class="flex items-center justify-between bg-slate-50 border border-slate-200 p-3.5 rounded-xl">
+                    <div>
+                        <h2 class="font-bold text-slate-900 text-sm">Official Card Ready</h2>
+                        <p class="text-xs text-slate-500">Save as a clean, single-page PDF report</p>
+                    </div>
+                    <button 
+                        onclick="window.print()" 
+                        type="button" 
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-xs font-semibold px-4 py-2 shadow-sm transition"
+                    >
+                        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span>Print / Save PDF</span>
+                    </button>
                 </div>
 
-                <!-- Status Legend -->
-                <div class="rounded-xl border border-slate-200 bg-slate-50/80 p-3 sm:p-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <span class="font-bold text-slate-800 text-xs tracking-wide uppercase">मापा हुआ पैमाना / Visual Status Guide</span>
-                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
-                            <span class="inline-flex items-center gap-1.5 text-slate-600">
-                                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> Optimal
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 text-slate-600">
-                                <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span> Below Range
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 text-slate-600">
-                                <span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span> Above Range
-                            </span>
+                <!-- ======================================================== -->
+                <!-- FULL REPORT CARD (Centered & Self-Contained) -->
+                <!-- ======================================================== -->
+                <div id="printableReportCard" class="bg-white border border-slate-200 rounded-xl p-5 space-y-3.5">
+                    
+                    <!-- Card Header -->
+                    <div class="flex items-start justify-between border-b border-slate-200 pb-3">
+                        <div>
+                            <span class="inline-block px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-200 text-[9px] font-bold tracking-wider uppercase mb-1">Government Standard Layout</span>
+                            <h2 class="text-xl font-extrabold text-slate-900">मृदा स्वास्थ्य कार्ड <span class="text-sky-700 text-sm font-semibold">/ Soil Health Card</span></h2>
+                            <p class="text-[10px] text-slate-500">ML-Powered Agro-Ecological Diagnostic Report</p>
+                        </div>
+                        <div class="text-right text-[10px] space-y-0.5">
+                            <p class="text-slate-400 font-semibold">CARD ID: <span class="text-slate-800 font-bold">AI-SHC-{{ '%06d'|format(range(1, 999999)|random) }}</span></p>
+                            <p class="text-emerald-700 font-bold">● VERIFIED DIGITAL RECORD</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Recommendations Section -->
-                <section class="mt-8">
-                    <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
-                        <h2 class="text-base font-bold text-slate-900">संस्तुति / Crop Recommendation</h2>
-                        <span class="text-xs text-slate-400 font-medium">Ranked by Model Confidence</span>
+                    <!-- 7 Soil Metrics Grid -->
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-2">मिट्टी के नमूने का विवरण / Diagnostic Values</p>
+                        
+                        {% set cards = [
+                          ('N','उपलब्ध नाइट्रोजन (N)','Available N', values.N, 'kg/ha'),
+                          ('P','उपलब्ध फास्फोरस (P)','Available P', values.P, 'kg/ha'),
+                          ('K','उपलब्ध पोटेशियम (K)','Available K', values.K, 'kg/ha'),
+                          ('ph','पीएच (pH)','Reaction', values.ph, ''),
+                          ('temperature','तापमान','Ambient Temp', values.temperature, '°C'),
+                          ('humidity','आर्द्रता','Humidity', values.humidity, '%'),
+                          ('rainfall','वर्षा','Precipitation', values.rainfall, 'mm')
+                        ] %}
+
+                        <div class="grid grid-cols-4 gap-2">
+                            {% for key, hindi, english, val, unit in cards %}
+                              {% set st = statuses[key] %}
+                              {% if st == 'good' %}
+                                {% set c_border = 'border-emerald-200' %}
+                                {% set c_bg = 'bg-emerald-50/40' %}
+                                {% set b_bg = 'bg-emerald-100 text-emerald-800 border-emerald-300' %}
+                                {% set b_text = 'Optimal' %}
+                              {% elif st == 'low' %}
+                                {% set c_border = 'border-amber-200' %}
+                                {% set c_bg = 'bg-amber-50/40' %}
+                                {% set b_bg = 'bg-amber-100 text-amber-800 border-amber-300' %}
+                                {% set b_text = 'Low' %}
+                              {% else %}
+                                {% set c_border = 'border-rose-200' %}
+                                {% set c_bg = 'bg-rose-50/40' %}
+                                {% set b_bg = 'bg-rose-100 text-rose-800 border-rose-300' %}
+                                {% set b_text = 'High' %}
+                              {% endif %}
+
+                              <div class="metric-box rounded-lg border {{ c_border }} {{ c_bg }} p-2">
+                                  <div class="flex items-start justify-between gap-1">
+                                      <div class="min-w-0">
+                                          <p class="text-[10px] font-bold text-slate-800 truncate leading-tight">{{ hindi }}</p>
+                                          <p class="text-[8px] text-slate-400 truncate">{{ english }}</p>
+                                      </div>
+                                      <span class="text-[8px] font-bold uppercase px-1 py-0.2 rounded border {{ b_bg }}">{{ b_text }}</span>
+                                  </div>
+                                  <p class="metric-val mt-1 text-base font-black text-slate-900 leading-none">
+                                      {{ '%.2f'|format(val) }} <span class="text-[9px] font-normal text-slate-500">{{ unit }}</span>
+                                  </p>
+                              </div>
+                            {% endfor %}
+
+                            <!-- Scale Guide -->
+                            <div class="metric-box rounded-lg border border-slate-200 bg-slate-50 p-2 flex flex-col justify-center text-[8px] space-y-0.5">
+                                <span class="font-bold text-slate-700 uppercase">Scale Guide:</span>
+                                <span class="text-slate-600 flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Optimal Range</span>
+                                <span class="text-slate-600 flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Below Normal</span>
+                                <span class="text-slate-600 flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span> Above Normal</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm">
-                                <thead class="bg-slate-900 text-white text-xs font-semibold">
+                    <!-- Crop Recommendation Table -->
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-1 mb-1.5">
+                            <p class="text-[11px] font-bold text-slate-800 uppercase tracking-wider">संस्तुति / Crop Recommendation</p>
+                            <span class="text-[9px] text-slate-400">Model Rank Ordering</span>
+                        </div>
+                        <div class="rounded-lg border border-slate-200 overflow-hidden">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-900 text-white text-[9px] font-bold uppercase">
                                     <tr>
-                                        <th class="py-3 px-4">Rank</th>
-                                        <th class="py-3 px-4">Recommended Crop</th>
-                                        <th class="py-3 px-4">Prediction Confidence</th>
+                                        <th class="py-1.5 px-3 w-16">Rank</th>
+                                        <th class="py-1.5 px-3">Recommended Crop</th>
+                                        <th class="py-1.5 px-3 text-right">Confidence Level</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-200 bg-white">
+                                <tbody class="divide-y divide-slate-100 text-[11px]">
                                     {% for p in predictions %}
-                                    <tr class="hover:bg-slate-50/80 transition">
-                                        <td class="py-3 px-4 font-semibold text-slate-500">#{{ loop.index }}</td>
-                                        <td class="py-3 px-4 font-bold text-slate-900 capitalize">{{ p.crop }}</td>
-                                        <td class="py-3 px-4">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="py-1 px-3 font-bold text-slate-500">#{{ loop.index }}</td>
+                                        <td class="py-1 px-3 font-extrabold text-slate-900 capitalize">{{ p.crop }}</td>
+                                        <td class="py-1 px-3 text-right">
                                             {% if p.confidence is not none %}
-                                            <div class="flex items-center gap-3">
-                                                <div class="h-2 w-28 sm:w-40 bg-slate-100 rounded-full overflow-hidden border border-slate-200/60">
+                                            <div class="inline-flex items-center gap-2">
+                                                <div class="w-20 h-1.5 bg-slate-100 border border-slate-200 rounded-full overflow-hidden">
                                                     <div class="h-full bg-sky-600 rounded-full" style="width: {{ [p.confidence, 100]|min }}%"></div>
                                                 </div>
-                                                <span class="font-bold text-slate-700 text-xs min-w-[50px]">{{ '%.2f'|format(p.confidence) }}%</span>
+                                                <span class="font-bold text-slate-800 text-[10px]">{{ '%.2f'|format(p.confidence) }}%</span>
                                             </div>
                                             {% else %}
-                                                <span class="text-xs text-slate-400 italic">Not available</span>
+                                                <span class="text-slate-400 italic text-[10px]">N/A</span>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -247,116 +325,94 @@
                             </table>
                         </div>
                     </div>
-                </section>
 
-                <!-- Agronomy Guidance -->
-                <section class="mt-6 rounded-xl border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-900 text-white px-4 py-2.5 font-bold text-xs flex items-center justify-between">
-                        <span>AI AGRONOMY GUIDANCE</span>
-                        <span class="text-[10px] font-normal text-slate-300">Automated Intelligence</span>
+                    <!-- Agronomy Guidance -->
+                    <div class="rounded-lg border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-900 text-white px-3 py-1 text-[9px] font-bold uppercase tracking-wider flex justify-between">
+                            <span>AI Agronomy Advisory</span>
+                            <span class="text-slate-400 font-normal">Automated Analysis</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-50/50">
+                            {% if advice %}
+                                <div class="guidance-box text-[10px] leading-relaxed text-slate-700 whitespace-pre-wrap font-sans">{{ advice }}</div>
+                            {% else %}
+                                <p class="text-[10px] text-slate-400 italic">No guidance text supplied.</p>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="p-4 sm:p-5 bg-white">
-                        {% if advice %}
-                            <div class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans">{{ advice }}</div>
-                        {% else %}
-                            <p class="text-xs text-slate-500">
-                                Configure <code class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-700 font-mono">GEMINI_API_KEY</code> to enable automated precision insights.
-                            </p>
-                        {% endif %}
+
+                    <!-- Disclaimer Footer -->
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[8px] text-slate-400">
+                        <span><strong>Notice:</strong> Prototype recommendation. Validate with laboratory soil tests before field application.</span>
+                        <span>Krishi Vigyan Kendra Aligned</span>
                     </div>
-                </section>
+                </div>
 
                 {% else %}
                 <!-- Empty State -->
-                <div class="min-h-[420px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
-                    <div class="h-16 w-16 rounded-2xl bg-emerald-100/70 border border-emerald-200 flex items-center justify-center text-3xl shadow-sm">
-                        🌱
-                    </div>
-                    <h3 class="mt-4 text-base font-bold text-slate-800">Awaiting Soil Analysis Data</h3>
-                    <p class="mt-1 text-xs sm:text-sm text-slate-500 max-w-sm">
-                        Fill in the soil nutrient values on the left and click <strong>Generate</strong> to view the diagnostic dashboard.
-                    </p>
+                <div class="min-h-[380px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
+                    <div class="h-14 w-14 rounded-2xl bg-emerald-100/70 border border-emerald-200 flex items-center justify-center text-2xl shadow-sm">🌱</div>
+                    <h3 class="mt-3 text-sm font-bold text-slate-800">Awaiting Soil Sample Inputs</h3>
+                    <p class="mt-1 text-xs text-slate-500 max-w-sm">Enter the soil and climate parameters on the left to produce the health report card.</p>
                 </div>
                 {% endif %}
 
-                <!-- AI Agricultural Assistant Chat Widget -->
-                <section class="mt-8 rounded-2xl border border-emerald-200/80 bg-white shadow-subtle overflow-hidden">
-                    <!-- Chat Header -->
-                    <div class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-green-600 px-5 py-4 text-white">
-                        <div class="flex items-center gap-3">
-                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-xl border border-white/20">
-                                🌾
-                            </div>
-                            <div>
-                                <h2 class="text-base font-bold text-white leading-tight">AI Agronomist Chat</h2>
-                                <p class="text-xs text-emerald-100/80">Real-time advisory on soil health & crop yields</p>
-                            </div>
+                <!-- Interactive Chatbot Assistant (Auto-hidden during print) -->
+                <section id="chatAssistantSection" class="rounded-2xl border border-emerald-200 bg-white shadow-subtle overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-800 to-green-600 px-5 py-3.5 text-white flex items-center gap-3">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-lg">🌾</div>
+                        <div>
+                            <h2 class="text-sm font-bold text-white">AI Agronomist Chat</h2>
+                            <p class="text-[11px] text-emerald-100">Inquire about soil conditions, fertilizers, and crops</p>
                         </div>
                     </div>
 
-                    <!-- Chat Body -->
-                    <div id="chatMessages" class="h-[360px] sm:h-[400px] overflow-y-auto bg-slate-50/60 p-4 space-y-4">
-                        <!-- Initial AI message -->
+                    <div id="chatMessages" class="h-[340px] overflow-y-auto bg-slate-50/50 p-4 space-y-3">
                         <div class="flex items-start gap-2.5">
-                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-base">
-                                🌱
-                            </div>
-                            <div class="max-w-[85%] rounded-2xl rounded-tl-sm bg-white border border-slate-200/80 px-4 py-2.5 shadow-2xs">
-                                <p class="text-xs sm:text-sm leading-relaxed text-slate-700">
-                                    Hello! I am your AI Agronomist. Ask any questions about nutrient deficiencies, fertilizer adjustments, or crop recommendations.
-                                </p>
+                            <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-sm">🌱</div>
+                            <div class="max-w-[85%] rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-3.5 py-2 text-xs leading-relaxed text-slate-700 shadow-2xs">
+                                Hello! Ask me any questions about your soil metrics, remediation techniques, or crop yields.
                             </div>
                         </div>
 
-                        <!-- Suggested Questions -->
-                        <div id="suggestedQuestions" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                            <button type="button" class="chat-suggestion rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 hover:text-emerald-900 transition shadow-2xs" data-question="Why was this crop recommended for my soil?">
+                        <div id="suggestedQuestions" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
+                            <button type="button" class="chat-suggestion rounded-lg border border-slate-200 bg-white p-2 text-left text-xs text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 transition shadow-2xs" data-question="Why was this crop recommended for my soil?">
                                 💡 Why was this crop recommended?
                             </button>
-                            <button type="button" class="chat-suggestion rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 hover:text-emerald-900 transition shadow-2xs" data-question="Explain my soil condition in simple language.">
+                            <button type="button" class="chat-suggestion rounded-lg border border-slate-200 bg-white p-2 text-left text-xs text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 transition shadow-2xs" data-question="Explain my soil condition in simple language.">
                                 🔍 Explain soil condition simply
                             </button>
-                            <button type="button" class="chat-suggestion rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 hover:text-emerald-900 transition shadow-2xs" data-question="Which crop among the recommendations is the best option?">
+                            <button type="button" class="chat-suggestion rounded-lg border border-slate-200 bg-white p-2 text-left text-xs text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 transition shadow-2xs" data-question="Which crop among the recommendations is the best option?">
                                 🌾 Best crop selection for maximum yield
                             </button>
-                            <button type="button" class="chat-suggestion rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-xs font-medium text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 hover:text-emerald-900 transition shadow-2xs" data-question="What should I improve in my soil?">
+                            <button type="button" class="chat-suggestion rounded-lg border border-slate-200 bg-white p-2 text-left text-xs text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 transition shadow-2xs" data-question="What should I improve in my soil?">
                                 🧪 How can I improve nutrient balance?
                             </button>
                         </div>
                     </div>
 
-                    <!-- Input Area -->
-                    <div class="border-t border-slate-200 bg-white p-3 sm:p-4">
+                    <div class="border-t border-slate-200 bg-white p-3">
                         <form id="chatForm" class="flex gap-2">
                             <input
                                 id="chatInput"
                                 type="text"
                                 autocomplete="off"
-                                placeholder="Ask about soil, fertilizing, or weather..."
-                                class="min-w-0 flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+                                placeholder="Ask an agronomy question..."
+                                class="min-w-0 flex-1 rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition"
                             >
                             <button
                                 id="chatSend"
                                 type="submit"
-                                class="rounded-xl bg-emerald-700 px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-50 flex items-center gap-1 shrink-0"
+                                class="rounded-xl bg-emerald-700 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-800 disabled:opacity-50 transition flex items-center gap-1 shrink-0"
                             >
-                                <span>Send</span>
+                                <span>Ask</span>
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </button>
                         </form>
-                        <p class="mt-2 text-[11px] text-slate-400">
-                            AI-generated responses should be correlated with regional agricultural guidelines.
-                        </p>
                     </div>
                 </section>
             </div>
-        </section>
-
-        <!-- Official Disclaimer Footer -->
-        <footer class="border-t border-slate-200 bg-slate-50/70 px-5 sm:px-8 py-3.5 text-[11px] leading-normal text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span><strong>Disclaimer:</strong> Prototype analysis. Verify through certified laboratory soil tests before field application.</span>
-            <span class="text-slate-400 text-[10px] shrink-0">Krishi Vigyan Kendra Aligned</span>
-        </footer>
+        </div>
     </main>
 </div>
 
@@ -371,28 +427,22 @@ const predictions = {{ predictions|default([])|tojson }};
 
 function addMessage(message, sender) {
     const wrapper = document.createElement("div");
-
     if (sender === "user") {
         wrapper.className = "flex justify-end";
         wrapper.innerHTML = `
-            <div class="max-w-[85%] rounded-2xl rounded-tr-sm bg-emerald-700 px-4 py-2.5 text-xs sm:text-sm leading-relaxed text-white shadow-2xs">
+            <div class="max-w-[85%] rounded-2xl rounded-tr-sm bg-emerald-700 px-3.5 py-2 text-xs leading-relaxed text-white shadow-2xs">
                 ${escapeHtml(message)}
             </div>
         `;
     } else {
         wrapper.className = "flex items-start gap-2.5";
         wrapper.innerHTML = `
-            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-base">
-                🌱
-            </div>
-            <div class="max-w-[85%] rounded-2xl rounded-tl-sm bg-white border border-slate-200/80 px-4 py-2.5 shadow-2xs">
-                <p class="text-xs sm:text-sm leading-relaxed text-slate-700 whitespace-pre-line">
-                    ${escapeHtml(message)}
-                </p>
+            <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-sm">🌱</div>
+            <div class="max-w-[85%] rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-3.5 py-2 text-xs leading-relaxed text-slate-700 shadow-2xs whitespace-pre-line">
+                ${escapeHtml(message)}
             </div>
         `;
     }
-
     chatMessages.appendChild(wrapper);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
@@ -408,15 +458,11 @@ function addLoadingMessage() {
     wrapper.id = "chatLoading";
     wrapper.className = "flex items-start gap-2.5";
     wrapper.innerHTML = `
-        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-base">
-            🌱
-        </div>
-        <div class="rounded-2xl rounded-tl-sm bg-white border border-slate-200/80 px-4 py-3 shadow-2xs">
-            <div class="flex gap-1.5 items-center">
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600"></span>
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600" style="animation-delay:150ms"></span>
-                <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600" style="animation-delay:300ms"></span>
-            </div>
+        <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-sm">🌱</div>
+        <div class="rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-3.5 py-2.5 shadow-2xs flex gap-1">
+            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600"></span>
+            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600" style="animation-delay:150ms"></span>
+            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-600" style="animation-delay:300ms"></span>
         </div>
     `;
     chatMessages.appendChild(wrapper);
@@ -430,7 +476,6 @@ function removeLoadingMessage() {
 
 async function sendChatMessage(message) {
     if (!message.trim()) return;
-
     addMessage(message, "user");
     chatInput.value = "";
     chatSend.disabled = true;
@@ -446,19 +491,12 @@ async function sendChatMessage(message) {
                 predictions: predictions
             })
         });
-
         const data = await response.json();
         removeLoadingMessage();
-
-        if (data.success) {
-            addMessage(data.answer, "assistant");
-        } else {
-            addMessage(data.error || "Sorry, I could not answer that question.", "assistant");
-        }
+        addMessage(data.success ? data.answer : (data.error || "Sorry, I could not answer that question."), "assistant");
     } catch (error) {
         removeLoadingMessage();
-        addMessage("Unable to connect to the agricultural assistant. Please check your connection.", "assistant");
-        console.error(error);
+        addMessage("Unable to connect to assistant.", "assistant");
     } finally {
         chatSend.disabled = false;
         chatInput.focus();
