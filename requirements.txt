@@ -7,3 +7,4 @@ python-dotenv>=1.0
 google-genai>=1.0
 xgboost>=2.0
 lightgbm>=4.0
+gunicorn
